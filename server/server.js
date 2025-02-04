@@ -10,7 +10,10 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["http://localhost:5173"],
+    origin: [
+      "http://localhost:5173",
+      "https://mern-app-jwt-authentication-learning.vercel.app",
+    ],
     credentials: true,
   })
 );
