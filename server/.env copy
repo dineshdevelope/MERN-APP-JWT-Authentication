@@ -1,0 +1,5 @@
+PORT="your port "
+MONGODB_URI="MongoDB URL"
+JWT_KEY="your key"
+GMAIL_PASS="gmail app password"
+

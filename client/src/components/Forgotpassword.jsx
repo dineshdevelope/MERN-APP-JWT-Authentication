@@ -3,29 +3,25 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 
-const Login = () => {
+const Forgotpassword = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  axios.defaults.withCredentials = true;
   const apiKey = import.meta.env.VITE_API_KEY;
-
-  //Axios.defaults.withCredentials = true;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     await axios
-      .post(`${apiKey}/auth/login`, { email, password })
+      .post(`${apiKey}/auth/forgot-password`, { email })
       .then((response) => {
         if (response.data.status) {
-          navigate("/");
+          alert("check your email for reset password link");
+          navigate("/login");
         }
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
   return (
     <div>
       <div className="flex flex-col justify-center font-[sans-serif] sm:h-screen p-4">
@@ -55,19 +51,6 @@ const Login = () => {
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
-              <div>
-                <label className="text-gray-800 text-sm mb-2 block">
-                  Password
-                </label>
-                <input
-                  name="password"
-                  type="password"
-                  required
-                  className="text-gray-800 bg-white border border-gray-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500"
-                  placeholder="Enter password"
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
             </div>
 
             <div className="!mt-8">
@@ -75,15 +58,10 @@ const Login = () => {
                 type="submit"
                 className="w-full py-3 px-4 text-sm tracking-wider font-semibold rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none"
               >
-                Login
+                Send
               </button>
             </div>
-            <Link
-              className="bg-red-500 text-sm mt-6 font-semibold text-blue-100 text-center py-2 rounded hover:underline block"
-              to={"/forgot-password"}
-            >
-              Forgot Password ?
-            </Link>
+
             <p className="text-gray-800 text-sm mt-6 text-center">
               Don't have an account?{" "}
               <Link
@@ -100,4 +78,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Forgotpassword;

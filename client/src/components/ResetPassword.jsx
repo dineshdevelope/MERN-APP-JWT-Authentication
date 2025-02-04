@@ -1,31 +1,30 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 
-const Login = () => {
+const ResetPassword = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  axios.defaults.withCredentials = true;
-  const apiKey = import.meta.env.VITE_API_KEY;
 
-  //Axios.defaults.withCredentials = true;
+  const { token } = useParams();
+
+  const apiKey = import.meta.env.VITE_API_KEY;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     await axios
-      .post(`${apiKey}/auth/login`, { email, password })
+      .post(`${apiKey}/auth/reset-password/` + token, { password })
       .then((response) => {
         if (response.data.status) {
-          navigate("/");
+          navigate("/login");
         }
+        console.log(response.data);
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
   return (
     <div>
       <div className="flex flex-col justify-center font-[sans-serif] sm:h-screen p-4">
@@ -44,27 +43,14 @@ const Login = () => {
             <div className="space-y-6">
               <div>
                 <label className="text-gray-800 text-sm mb-2 block">
-                  Email Id
-                </label>
-                <input
-                  name="email"
-                  required
-                  type="email"
-                  className="text-gray-800 bg-white border border-gray-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500"
-                  placeholder="Enter email"
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-              <div>
-                <label className="text-gray-800 text-sm mb-2 block">
-                  Password
+                  New Password
                 </label>
                 <input
                   name="password"
-                  type="password"
                   required
+                  type="password"
                   className="text-gray-800 bg-white border border-gray-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500"
-                  placeholder="Enter password"
+                  placeholder="Enter New Password"
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
@@ -75,15 +61,10 @@ const Login = () => {
                 type="submit"
                 className="w-full py-3 px-4 text-sm tracking-wider font-semibold rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none"
               >
-                Login
+                Reset
               </button>
             </div>
-            <Link
-              className="bg-red-500 text-sm mt-6 font-semibold text-blue-100 text-center py-2 rounded hover:underline block"
-              to={"/forgot-password"}
-            >
-              Forgot Password ?
-            </Link>
+
             <p className="text-gray-800 text-sm mt-6 text-center">
               Don't have an account?{" "}
               <Link
@@ -100,4 +81,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default ResetPassword;

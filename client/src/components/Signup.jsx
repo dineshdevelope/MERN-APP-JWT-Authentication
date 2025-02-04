@@ -13,7 +13,6 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    //console.log(username, password, email);
     await axios
       .post(`${apiKey}/auth/signup`, { username, email, password })
       .then((response) => {
